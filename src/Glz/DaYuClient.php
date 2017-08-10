@@ -33,7 +33,7 @@ class DaYuClient
      * @param null $signatureNonce string 一个随机码,避免被重放攻击。
      * @return string 返回一个url,您要做的就访问这个地址,得到json串。
      */
-    public function getUrl4SendSms($phoneNumbers,$signName,$templateCode,$templateParam,$OutId,$signatureNonce = null){
+    public function getUrl($phoneNumbers,$signName,$templateCode,$templateParam,$OutId,$signatureNonce = null){
         if(is_null($signatureNonce)) {
             $this->SignatureNonce = rand(10000, 99999);
         }else{
@@ -77,3 +77,6 @@ class DaYuClient
         $this->kvs[$k] = $v;
     }
 }
+
+
+
