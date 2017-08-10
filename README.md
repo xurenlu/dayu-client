@@ -4,6 +4,16 @@
 
 最好看一下代码，因为实在太短了，没有理由不看啊。。。。
 
+## 安装方法:
+
+ composer 安装 :
+
+```
+ composer require glz/dayu-client dev-master"
+```
+
+如果不会composer，直接从[github](https://github.com/xurenlu/dayu-client)上把文件拉下来也行，反正源代码目录就一个文件。
+
 ##　使用方法
 
 直接上代码了
