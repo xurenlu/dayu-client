@@ -23,7 +23,7 @@ $smsSend = new DaYuClient("NjOBTNw0YRvJW0Un","VRhOKIuIe3DHumO8CIZ4R3eq8NCvWA");
 $url =  $smsSend->getUrl("手机号码", "示例短信签名", "SMS_****",
 json_encode(["code"=>12345]),
     rand(1111,9999)
-);// 这里的几个参数要改一下 
+);// 这里的几个参数要改一下 ,倒数第二个参数 ，是对templateParam 进行json_encode后的字符串，是因为我的短信模板是"您的验证码是$code",所以我传的templateParam参数就是{"code":12345} .
 
 /**
 接下来，

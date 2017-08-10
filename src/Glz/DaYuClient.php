@@ -9,7 +9,7 @@ class DaYuClient
     protected $kvs=[];
     protected  $secret = "";
     public $endPoint = "https://dysmsapi.aliyuncs.com/";
-    public function __construct($appKey,$appSecret,$timeStamp = null)
+    public function __construct($appKey,$appSecret)
     {
         $this->secret = $appSecret;
         $this->kvs = [
@@ -18,7 +18,7 @@ class DaYuClient
             "AccessKeyId"=>$appKey,
             "SignatureMethod"=>"HMAC-SHA1",
             "SignatureVersion"=>"1.0",
-            //"Action"=>"Dysmsapi" 坑死了,阿里的客服一开始告诉我的是这个Dysmsapi,其实不是。
+            //"Action"=>"Dysmsapi", //坑死了,阿里的客服一开始告诉我的是这个Dysmsapi,其实不是。
             "Action"=>"SendSms",
             "RegionId"=>"cn-hangzhou"
         ];
@@ -33,7 +33,7 @@ class DaYuClient
      * @param null $signatureNonce string 一个随机码,避免被重放攻击。
      * @return string 返回一个url,您要做的就访问这个地址,得到json串。
      */
-    public function getUrl($phoneNumbers,$signName,$templateCode,$templateParam,$OutId,$signatureNonce = null){
+    public function getUrl4SendSms($phoneNumbers,$signName,$templateCode,$templateParam,$OutId,$signatureNonce = null){
         if(is_null($signatureNonce)) {
             $this->SignatureNonce = rand(10000, 99999);
         }else{
@@ -80,3 +80,12 @@ class DaYuClient
 
 
 
+$smsSend = new DaYuClient("LTAIQlV36xqA13xK","30hx7xyQDCTbPbDF1vUQRHGNaolXpk");
+$smsSend->endPoint = "http://dysmsapi.aliyuncs.com/";
+$url =  $smsSend->getUrl4SendSms("18006787690", "高老庄", "SMS_83365003",
+    json_encode(["code"=>12345]),
+    rand(1111,9999)
+);// 这里的几个参数要改一下
+
+echo $url."\n";
+echo file_get_contents($url);
