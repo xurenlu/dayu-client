@@ -17,5 +17,7 @@
     "psr-4": {
       "Glz\\": "src/Glz/"
     }
-  }
+  },
+    "minimum-stability": "1.0.0",
+    "prefer-stable": true
 }
