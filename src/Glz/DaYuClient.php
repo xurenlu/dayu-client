@@ -78,14 +78,3 @@ class DaYuClient
     }
 }
 
-
-
-$smsSend = new DaYuClient("LTAIQlV36xqA13xK","30hx7xyQDCTbPbDF1vUQRHGNaolXpk");
-$smsSend->endPoint = "http://dysmsapi.aliyuncs.com/";
-$url =  $smsSend->getUrl4SendSms("18006787690", "高老庄", "SMS_83365003",
-    json_encode(["code"=>12345]),
-    rand(1111,9999)
-);// 这里的几个参数要改一下
-
-echo $url."\n";
-echo file_get_contents($url);
