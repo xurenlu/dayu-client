@@ -1,6 +1,6 @@
 {
   "name": "glz/dayu-client",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "一个超简洁的阿里大鱼客户端.",
   "minimum-stability": "dev",
   "license": "MIT",
