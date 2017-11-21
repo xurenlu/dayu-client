@@ -6,6 +6,7 @@ namespace  Glz;
  */
 class DaYuClient
 {
+
     protected $kvs=[];
     protected  $secret = "";
     public $endPoint = "https://dysmsapi.aliyuncs.com/";
@@ -39,30 +40,52 @@ class DaYuClient
         }else{
             $this->SignatureNonce = $signatureNonce;
         }
-        $dataZone = date_default_timezone_get();
-        date_default_timezone_set("UTC");
-        $this->Timestamp = date("Y-m-d")."T".date("H:i:s")."Z";
-        date_default_timezone_set($dataZone);
+
         $this->PhoneNumbers = $phoneNumbers;
         $this->SignName = $signName;
         $this->TemplateCode = $templateCode;
         $this->TemplateParam = $templateParam;
         $this->OutId = $OutId;
+
+
+
+        $url = $this->GenerateUrl4Arguments();
+        return $url;
+    }
+
+    public function __call($name,$arguments){
+
+        if(sizeof($arguments)!=1){
+            throw new \Exception("arguments should be an array with 1 member");
+        }
+        foreach($arguments[0] as $k=>$v){
+            $this->$k = $v;
+        }
+        $this->Action = $name;
+        $this->SignatureNonce = rand(10000, 99999);
+        $this->fillSignature();
+        $url = $this->GenerateUrl4Arguments();
+        return $url;
+    }
+
+
+    protected function fillTimeStamp(){
+        $dataZone = date_default_timezone_get();
+        date_default_timezone_set("UTC");
+        $this->Timestamp = date("Y-m-d")."T".date("H:i:s")."Z";
+        date_default_timezone_set($dataZone);
+    }
+
+    protected function fillSignature(){
+        $this->fillTimeStamp();
         $arguments = $this->kvs;
         $uncoded = ($this->argumentsToString($arguments));
         $toencoded = "GET&%2F&".rawurlencode($uncoded);
         $sign = $this->sign($toencoded);
         $this->Signature = $sign;
-        $result =[];
-        $kvs = $this->kvs;
-        ksort($kvs);
-        foreach($kvs as $k=>$v){
-            $result[]=rawurlencode($k).'='.rawurlencode($v);
-        }
-        $url = $this->endPoint."?".  trim(implode("&", $result),"&");
-        return $url;
     }
-    private function argumentsToString($arguments){
+
+    protected function argumentsToString($arguments){
         ksort($arguments);
         $result=[];
         foreach($arguments as $k=>$v){
@@ -76,5 +99,26 @@ class DaYuClient
     public function __set($k,$v){
         $this->kvs[$k] = $v;
     }
+
+    /**
+     * @param $kvs
+     * @param $result
+     * @return string
+     */
+    protected function GenerateUrl4Arguments()
+    {
+        $kvs = $this->kvs;
+        ksort($kvs);
+        $result=[];
+        foreach ($kvs as $k => $v) {
+            $result[] = rawurlencode($k) . '=' . rawurlencode($v);
+        }
+        $url = $this->endPoint . "?" . trim(implode("&", $result), "&");
+        return $url;
+    }
+
+    public function gene
 }
+
+
 
