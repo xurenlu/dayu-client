@@ -48,7 +48,8 @@ class DaYuClient
         $this->OutId = $OutId;
 
 
-
+        $this->fillTimeStamp();
+        $this->fillSignature();
         $url = $this->GenerateUrl4Arguments();
         return $url;
     }
@@ -117,7 +118,6 @@ class DaYuClient
         return $url;
     }
 
-    public function gene
 }
 
 
